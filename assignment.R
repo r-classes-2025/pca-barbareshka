@@ -27,8 +27,8 @@ friends_tokens <- friends |>
 friends_tf <- friends_tokens |>
   count(speaker, word) |>
   group_by(speaker) |>
-  slice_max(n, n = 500, with_ties = FALSE) |>
   mutate(tf = n / sum(n)) |>
+  slice_max(n, n = 500, with_ties = FALSE) |>
   ungroup() |>
   select(speaker, word, tf)
 
