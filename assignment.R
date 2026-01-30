@@ -9,9 +9,8 @@ library(factoextra)
 # сохраните как символьный вектор
 top_speakers <- friends |>
   count(speaker, sort = TRUE) |>
-  slice_max(n, n = 6) |>
-  pull(speaker) |>
-  as.character()
+  head(6) |>
+  pull(speaker)
   
 # 2. отфильтруйте топ-спикеров, 
 # токенизируйте их реплики, удалите из них цифры
@@ -49,7 +48,7 @@ km.out <- kmeans(scale(friends_tf_wide), centers = 3, nstart = 20)
 
 # 6. примените к матрице метод главных компонент (prcomp)
 # центрируйте и стандартизируйте, использовав аргументы функции
-pca_fit <- prcomp(scale(friends_tf_wide), scale=TRUE, center=TRUE)
+pca_fit <- prcomp(friends_tf_wide, scale=TRUE, center=TRUE)
 
 # 7. Покажите наблюдения и переменные вместе (биплот)
 # в качестве геома используйте текст (=имя персонажа)
