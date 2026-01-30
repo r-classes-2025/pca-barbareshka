@@ -28,8 +28,8 @@ friends_tf <- friends_tokens |>
   count(speaker, word) |>
   group_by(speaker) |>
   arrange(desc(n)) |>
-  slice_head(n = 500) |>
   mutate(tf = n / sum(n)) |>
+  slice_head(n = 500) |>
   ungroup() |>
   select(speaker, word, tf)
 
