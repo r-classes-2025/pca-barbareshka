@@ -10,7 +10,8 @@ library(factoextra)
 top_speakers <- friends |>
   count(speaker, sort = TRUE) |>
   head(6) |>
-  pull(speaker)
+  pull(speaker) |>
+  as.character()
   
 # 2. отфильтруйте топ-спикеров, 
 # токенизируйте их реплики, удалите из них цифры
@@ -37,7 +38,8 @@ friends_tf <- friends_tokens |>
 # столбец c именем спикера превратите в имя ряда, используя подходящую функцию 
 friends_tf_wide <- friends_tf |>
   pivot_wider(names_from = word, values_from = tf, values_fill = 0) |>
-  column_to_rownames("speaker")
+  column_to_rownames("speaker") |>
+  as.matrix()
 
 # 5. установите зерно 123
 # проведите кластеризацию k-means (k = 3) на относительных значениях частотности (nstart = 20)
