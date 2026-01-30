@@ -29,7 +29,7 @@ friends_tf <- friends_tokens |>
   count(speaker, word) |>
   group_by(speaker) |>
   slice_max(n, n = 500, with_ties = FALSE) |>
-  mutate(prop = n / sum(n)) |>
+  mutate(tf = n / sum(n)) |>
   ungroup()
 
 # 4. преобразуйте в широкий формат; 
