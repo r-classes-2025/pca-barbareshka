@@ -20,7 +20,8 @@ top_speakers <- friends |>
 friends_tokens <- friends |>
   filter(speaker %in% top_speakers) |>
   unnest_tokens(word, text) |>
-  filter(!str_detect(word, "\\d")) |>
+  mutate(word = str_remove_all(word, "[:digit:]")) |>
+  filter(word != "") |>
   select(speaker, word)
 
 # 3. отберите по 500 самых частотных слов для каждого персонажа
@@ -50,7 +51,7 @@ km.out <- kmeans(scale(friends_tf_wide), centers = 3, nstart = 20)
 
 # 6. примените к матрице метод главных компонент (prcomp)
 # центрируйте и стандартизируйте, использовав аргументы функции
-pca_fit <- prcomp(scale(friends_tf_wide), scale.=TRUE, center=TRUE)
+pca_fit <- prcomp(friends_tf_wide, scale.=TRUE, center=TRUE)
 
 # 7. Покажите наблюдения и переменные вместе (биплот)
 # в качестве геома используйте текст (=имя персонажа)
