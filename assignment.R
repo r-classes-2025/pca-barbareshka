@@ -30,12 +30,12 @@ friends_tf <- friends_tokens |>
   group_by(speaker) |>
   slice_max(n, n = 500, with_ties = FALSE) |>
   mutate(tf = n / sum(n)) |>
-  ungroup()
+  ungroup() |>
+  select(speaker, word, tf)
 
 # 4. преобразуйте в широкий формат; 
 # столбец c именем спикера превратите в имя ряда, используя подходящую функцию 
 friends_tf_wide <- friends_tf |>
-  select(speaker, word, tf) |>
   pivot_wider(names_from = word, values_from = tf, values_fill = 0) |>
   column_to_rownames("speaker")
 
@@ -57,7 +57,7 @@ pca_fit <- prcomp(friends_tf_wide, center = TRUE, scale. = TRUE)
 # отберите 20 наиболее значимых переменных (по косинусу, см. документацию к функции)
 # сохраните график как переменную q
 
-q <- fviz_pca_biplot(pca_fit,  geom = c("text"),
+q <- fviz_pca_biplot(pca_fit, has_text_layer=TRUE,
                 select.var = list(cos2 = 20),
                 habillage = as.factor(km.out$cluster),
                 col.var = "steelblue",
