@@ -49,7 +49,7 @@ km.out <- kmeans(scale(friends_tf_wide), centers = 3, nstart = 20)
 
 # 6. примените к матрице метод главных компонент (prcomp)
 # центрируйте и стандартизируйте, использовав аргументы функции
-pca_fit <- prcomp(friends_tf_wide, center = TRUE, scale. = TRUE)
+pca_fit <- prcomp(scale(friends_tf_wide), center = TRUE, scale. = TRUE)
 
 # 7. Покажите наблюдения и переменные вместе (биплот)
 # в качестве геома используйте текст (=имя персонажа)
@@ -57,7 +57,7 @@ pca_fit <- prcomp(friends_tf_wide, center = TRUE, scale. = TRUE)
 # отберите 20 наиболее значимых переменных (по косинусу, см. документацию к функции)
 # сохраните график как переменную q
 
-q <- fviz_pca_biplot(pca_fit, has_text_layer=TRUE,
+q <- fviz_pca_biplot(pca_fit, geom=c("text"),
                 select.var = list(cos2 = 20),
                 habillage = as.factor(km.out$cluster),
                 col.var = "steelblue",
